@@ -1,34 +1,34 @@
 class User {
 
-    login(req, res) {
+    static login(req, res) {
         
     }
 
-    register(req, res) {
+    static register(req, res) {
         
     }
 
-    get(req, res) {
+    static get(req, res) {
 
     }
 
-    getAll(req, res) {
+    static getAll(req, res) {
         
     }
 
-    getMe(req, res) {
+    static getMe(req, res) {
 
     }
 
-    putMe(req, res) {
+    static putMe(req, res) {
 
     }
 
-    delete(req, res) {
+    static delete(req, res) {
 
     }
 
-    put(res, req) {
+    static put(res, req) {
         
     }
 }

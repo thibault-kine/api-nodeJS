@@ -12,9 +12,9 @@ const routes = {
 }
 
 
+app.use(express.json());
 app.use('/users', routes.user);
 app.use('/groups', routes.group);
-app.use(helmet());
 
 
 app.listen(PORT, HOSTNAME, () => {

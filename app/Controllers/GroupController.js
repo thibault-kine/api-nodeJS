@@ -1,27 +1,33 @@
 class Group {
 
-    getAll(req, res) {
+    static getAll(req, res) {
 
     }
 
-    get(req, res) {
+    static get(req, res) {
 
     }
 
-    getDetails(req, res) {
+    static getDetails(req, res) {
 
     }
 
-    delete(req, res) {
+    static delete(req, res) {
 
     }
 
-    put(req, res) {
+    static put(req, res) {
 
     }
 
-    add(req, res) {
-        
+    static add(req, res) {
+        const { name } = req.body;
+
+        if(!name) res.status(418).send({ message: "No name" })
+
+        res.send({
+            group: `Groupe nommé ${name}`
+        })
     }
 }
 

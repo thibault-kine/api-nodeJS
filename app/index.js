@@ -1,19 +1,18 @@
+const HOSTNAME = '127.0.0.1';
+const PORT = 3000;
+
 const express = require('express');
 const app = express();
 
 const routes = {
-    user: require('./routes/user'),
-    group: require('./routes/group'),
+    user: require('./Routes/user'),
+    group: require('./Routes/group'),
 }
 
-
-// app.use('/', (req, res) => {
-//     res.send('Hello world');
-// })
-
-app.use('/user', routes.user);
-
-app.use('/group', routes.group);
+app.use('/users', routes.user);
+app.use('/groups', routes.group);
 
 
-app.listen(3000);
+app.listen(PORT, HOSTNAME, () => {
+    console.log(`Connected to htpp://${HOSTNAME}:${PORT}/`);
+});

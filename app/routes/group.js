@@ -1,21 +1,34 @@
+/**
+ * ROUTEUR GROUP
+ */
+
 const express = require('express');
 const router = express.Router();
+const group = require('../Controllers/GroupController');
 
-router.get('/', (req, res) => {
-    res.send('GET group');
-})
+// PUBLIC
+// Récupère tous les groupes
+router.get('/', group.getAll(req, res))
 
-router.post('/', (req, res) => {
-    res.send('POST group');
-})
+// PUBLIC
+// Récupère un seul groupe
+router.get('/:id', group.get(req, res))
 
-router.put('/', (req, res) => {
-    res.send('PUT group');
-})
+// PUBLIC
+// Récupère les infos d'un groupe
+router.get('/details/:id', group.get(req, res))
 
-router.delete('/', (req, res) => {
-    res.send('DELETE group');
-})
+// ADMIN
+// Supprime un seul groupe
+router.delete('/:id', group.delete(req, res))
+
+// ADMIN 
+// Modifie un seul groupe
+router.put('/:id', group.put(req, res))
+
+// ADMIN
+// Créé un nouveau groupe
+router.post('/add', group.add(req, res))
 
 
 module.exports = router;

@@ -18,5 +18,5 @@ app.use(helmet());
 
 
 app.listen(PORT, HOSTNAME, () => {
-    console.log(`Connected to htpp://${HOSTNAME}:${PORT}/`);
+    console.log(`Connected to http://${HOSTNAME}:${PORT}/`);
 });

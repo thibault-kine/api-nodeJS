@@ -8,35 +8,35 @@ const user = require('../Controllers/UserController');
 
 // PUBLIC
 // Se connecter
-router.post('/login', user.login(req, res))
+router.post('/login', (req, res) => user.login(req, res))
 
 // PUBLIC
 // S'inscrire
-router.post('/register', user.register(req, res))
+router.post('/register', (req, res) => user.register(req, res))
 
 // PUBLIC
 // Récupérer tous les users
-router.get('/', user.getAll(req, res))
+router.get('/', (req, res) => user.getAll(req, res))
 
 // PUBLIC
 // Récupérer un seul user
-router.get('/:id', user.get(req, res))
+router.get('/:id', (req, res) => user.get(req, res))
 
 // AUTH
 // Récupérer ses informations
-router.get('/me', user.getMe(req, res))
+router.get('/me', (req, res) => user.getMe(req, res))
 
 // AUTH
 // Modifier ses informations
-router.put('/me', user.putMe(req, res))
+router.put('/me', (req, res) => user.putMe(req, res))
 
 // ADMIN
 // Supprimer un user précis
-router.delete('/:id', user.delete(req, res))
+router.delete('/:id', (req, res) => user.delete(req, res))
 
 // ADMIN
 // Modifier un user précis
-router.put('/:id', user.put(req, res))
+router.put('/:id', (req, res) => user.put(req, res))
 
 
 module.exports = router;

@@ -8,27 +8,27 @@ const group = require('../Controllers/GroupController');
 
 // PUBLIC
 // Récupère tous les groupes
-router.get('/', group.getAll(req, res))
+router.get('/', (req, res) => group.getAll(req, res))
 
 // PUBLIC
 // Récupère un seul groupe
-router.get('/:id', group.get(req, res))
+router.get('/:id', (req, res) => group.get(req, res))
 
 // PUBLIC
 // Récupère les infos d'un groupe
-router.get('/details/:id', group.getDetails(req, res))
+router.get('/details/:id', (req, res) => group.getDetails(req, res))
 
 // ADMIN
 // Supprime un seul groupe
-router.delete('/:id', group.delete(req, res))
+router.delete('/:id', (req, res) => group.delete(req, res))
 
 // ADMIN 
 // Modifie un seul groupe
-router.put('/:id', group.put(req, res))
+router.put('/:id', (req, res) => group.put(req, res))
 
 // ADMIN
 // Créé un nouveau groupe
-router.post('/add', group.add(req, res))
+router.post('/add', (req, res) => group.add(req, res))
 
 
 module.exports = router;

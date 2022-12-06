@@ -5,7 +5,7 @@ class User {
      * Se connecter
      */
     static login(req, res) {
-        
+        res.send('Se connecter');
     }
 
     /**
@@ -13,7 +13,7 @@ class User {
      * S'inscrire
      */
     static register(req, res) {
-        
+        res.send('S\'inscrire');
     }
 
     /**
@@ -21,7 +21,8 @@ class User {
      * Récupérer un seul user
      */
     static get(req, res) {
-
+        let { id } = req.params;
+        res.send(`Récupérer l'user avec l'ID ${id}`);
     }
 
     /**
@@ -29,7 +30,7 @@ class User {
      * Récupérer tous les users
      */
     static getAll(req, res) {
-        
+        res.send('Récupérer tous les users');
     }
 
     /**
@@ -37,7 +38,7 @@ class User {
      * Récupérer ses informations
      */
     static getMe(req, res) {
-
+        res.send('Récupérer ses informations persos');
     }
 
     /**
@@ -45,7 +46,7 @@ class User {
      * Modifier ses informations
      */
     static putMe(req, res) {
-
+        res.send('Modifier ses informations persos');
     }
 
     /**
@@ -53,15 +54,17 @@ class User {
      * Supprimer un user précis
      */
     static delete(req, res) {
-
+        let { id } = req.params;
+        res.send(`Supprimer l'user avec l'ID ${id}`);
     }
 
     /**
      * @admin
      * Modifier un user précis
      */
-    static put(res, req) {
-        
+    static put(req, res) {
+        let { id } = req.params;
+        res.send(`Modifier l'user avec l'ID ${id}`);
     }
 }
 

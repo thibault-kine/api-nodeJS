@@ -2,9 +2,20 @@ const HOSTNAME = '127.0.0.1';
 const PORT = 3000;
 
 const express = require('express');
-const helmet = require('helmet');
-
 const app = express();
+
+const mysql = require('mysql');
+const db = mysql.createConnection({
+    host: HOSTNAME,
+    user: 'root',
+    password: '',
+    database: 'annuaire-api'
+})
+db.connect((err) => {
+    if(err) throw err;
+    console.log('MySQL Connected!');
+})
+
 
 const routes = {
     user: require('./Routes/user'),

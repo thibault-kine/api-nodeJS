@@ -16,7 +16,7 @@ router.get('/:id', group.get(req, res))
 
 // PUBLIC
 // Récupère les infos d'un groupe
-router.get('/details/:id', group.get(req, res))
+router.get('/details/:id', group.getDetails(req, res))
 
 // ADMIN
 // Supprime un seul groupe

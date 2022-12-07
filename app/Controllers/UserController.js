@@ -1,5 +1,5 @@
 const { db } = require('../database');
-
+const { generateAccessToken } = require('../Utils/TokenGenerator');
 class User {
 
     /**
@@ -17,7 +17,7 @@ class User {
     static register(req, res) {
         let { email, roles, password, firstname, lastname } = req.body;
         let sql = 
-        `INSERT INTO users (email, roles, password, firstname, lastname)
+        `INSERT INTO users (email, roles, password, firstname, lastname) 
          VALUES ('${email}', '${roles}', '${password}', '${firstname}', '${lastname}');`;
         db.query(sql, (error, result) => {
             if(error) {

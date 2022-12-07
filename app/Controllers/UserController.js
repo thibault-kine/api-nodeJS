@@ -15,10 +15,10 @@ class User {
      * S'inscrire
      */
     static register(req, res) {
-        let { email, password, firstname, lastname } = req.body;
+        let { email, roles, password, firstname, lastname } = req.body;
         let sql = 
-        `INSERT INTO users (email, password, firstname, lastname)
-         VALUES ('${email}', '${password}', '${firstname}', '${lastname}');`;
+        `INSERT INTO users (email, roles, password, firstname, lastname)
+         VALUES ('${email}', '${roles}', '${password}', '${firstname}', '${lastname}');`;
         db.query(sql, (error, result) => {
             if(error) {
                 res.send(error);
@@ -96,10 +96,10 @@ class User {
      */
     static put(req, res) {
         let { id } = req.params;
-        let { email, password, firstname, lastname } = req.body;
+        let { email, roles, password, firstname, lastname } = req.body;
         // res.send(`Modifier l'user avec l'ID ${id}`);
         const sql = 
-        `UPDATE users SET email='${email}', password='${password}', firstname='${firstname}', lastname='${lastname}'
+        `UPDATE users SET email='${email}', roles='${roles}', password='${password}', firstname='${firstname}', lastname='${lastname}'
          WHERE id='${id}';`;
         db.query(sql, (error, result) => {
             if(error) {

@@ -1,3 +1,5 @@
+const { db } = require('../database');
+
 class Group {
 
     /**
@@ -5,7 +7,14 @@ class Group {
      * Récupère tous les groupes
      */
     static getAll(req, res) {
-        res.send('Récupère tous les groupes');
+        // res.send('Récupère tous les groupes');
+        const sql = 'SELECT * FROM groups';
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(result);
+        })
     }
 
     /**
@@ -14,7 +23,13 @@ class Group {
      */
     static get(req, res) {
         let { id } = req.params;
-        res.send(`Récupère le groupe avec l'ID ${id}`);
+        const sql = `SELECT * FROM groups WHERE id='${id}'`;
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(result);
+        })
     }
 
     /**
@@ -23,7 +38,13 @@ class Group {
      */
     static getDetails(req, res) {
         let { id } = req.params;
-        res.send(`Récupère les infos du groupe avec l'ID ${id}`);
+        const sql = `SELECT * FROM groups WHERE id='${id}'`;
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(result);
+        })
     }
 
     /**
@@ -32,7 +53,13 @@ class Group {
      */
     static delete(req, res) {
         let { id } = req.params;
-        res.send(`Supprime le groupe avec l'ID ${id}`);
+        const sql = `DELETE FROM groups WHERE id='${id}'`;
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(`Le groupe avec l'ID ${id} a été supprimé !`);
+        })
     }
 
     /**
@@ -41,7 +68,14 @@ class Group {
      */
     static put(req, res) {
         let { id } = req.params;
-        res.send(`Modifie le groupe avec l'ID ${id}`);
+        let { name } = req.body;
+        const sql = `UPDATE groups SET name='${name}' WHERE id='${id}'`;
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(`Le groupe avec l'ID ${id} a été modifié !`);
+        })
     }
 
     /**
@@ -49,7 +83,14 @@ class Group {
      * Créé un nouveau groupe
      */
     static add(req, res) {
-        res.send('Création d\'un nouveau groupe');
+        let { name } = req.body;
+        const sql = `INSERT INTO groups (name) VALUES ('${name}')`;
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(`Le groupe "${name}" a été créé !`);
+        })
     }
 }
 

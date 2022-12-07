@@ -1,3 +1,5 @@
+const { db } = require('../database');
+
 class User {
 
     /**
@@ -13,7 +15,16 @@ class User {
      * S'inscrire
      */
     static register(req, res) {
-        res.send('S\'inscrire');
+        let { email, password, firstname, lastname } = req.body;
+        let sql = 
+        `INSERT INTO users (email, password, firstname, lastname)
+         VALUES ('${email}', '${password}', '${firstname}', '${lastname}');`;
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send('Utilisateur enregistré !');
+        })
     }
 
     /**
@@ -22,7 +33,14 @@ class User {
      */
     static get(req, res) {
         let { id } = req.params;
-        res.send(`Récupérer l'user avec l'ID ${id}`);
+        let sql = `SELECT FROM users WHERE id = ${id}`;
+        // res.send(`Récupérer l'user avec l'ID ${id}`);
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(result);
+        })
     }
 
     /**
@@ -30,7 +48,14 @@ class User {
      * Récupérer tous les users
      */
     static getAll(req, res) {
-        res.send('Récupérer tous les users');
+        // res.send('Récupérer tous les users');
+        const sql = 'SELECT * FROM users';
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(result);
+        })
     }
 
     /**
@@ -55,7 +80,14 @@ class User {
      */
     static delete(req, res) {
         let { id } = req.params;
-        res.send(`Supprimer l'user avec l'ID ${id}`);
+        // res.send(`Supprimer l'user avec l'ID ${id}`);
+        const sql = `DELETE FROM users WHERE id = '${id}'`;
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(`Utilisateur avec l'ID ${id} supprimé !`);
+        })
     }
 
     /**
@@ -64,7 +96,17 @@ class User {
      */
     static put(req, res) {
         let { id } = req.params;
-        res.send(`Modifier l'user avec l'ID ${id}`);
+        let { email, password, firstname, lastname } = req.body;
+        // res.send(`Modifier l'user avec l'ID ${id}`);
+        const sql = 
+        `UPDATE users SET email='${email}', password='${password}', firstname='${firstname}', lastname='${lastname}'
+         WHERE id='${id}';`;
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            res.send(`Utilisateur avec l'ID ${id} a bien été modifié !`);
+        })
     }
 }
 

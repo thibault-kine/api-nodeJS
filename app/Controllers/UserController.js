@@ -1,5 +1,5 @@
 const { db } = require('../database');
-
+const { generateAccessToken } = require('../Utils/TokenGenerator');
 class User {
 
     /**
@@ -17,7 +17,7 @@ class User {
     static register(req, res) {
         let { email, roles, password, firstname, lastname } = req.body;
         let sql = 
-        `INSERT INTO users (email, roles, password, firstname, lastname)
+        `INSERT INTO users (email, roles, password, firstname, lastname) 
          VALUES ('${email}', '${roles}', '${password}', '${firstname}', '${lastname}');`;
         db.query(sql, (error, result) => {
             if(error) {
@@ -33,7 +33,7 @@ class User {
      */
     static get(req, res) {
         let { id } = req.params;
-        let sql = `SELECT FROM users WHERE id = ${id}`;
+        let sql = `SELECT * FROM users WHERE id = ${id}`;
         // res.send(`Récupérer l'user avec l'ID ${id}`);
         db.query(sql, (error, result) => {
             if(error) {
@@ -81,7 +81,7 @@ class User {
     static delete(req, res) {
         let { id } = req.params;
         // res.send(`Supprimer l'user avec l'ID ${id}`);
-        const sql = `DELETE FROM users WHERE id = '${id}'`;
+        const sql = `DELETE * FROM users WHERE id = '${id}'`;
         db.query(sql, (error, result) => {
             if(error) {
                 res.send(error);

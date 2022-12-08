@@ -53,7 +53,7 @@ class Group {
      */
     static delete(req, res) {
         let { id } = req.params;
-        const sql = `DELETE FROM groups WHERE id='${id}'`;
+        const sql = `DELETE * FROM groups WHERE id='${id}'`;
         db.query(sql, (error, result) => {
             if(error) {
                 res.send(error);

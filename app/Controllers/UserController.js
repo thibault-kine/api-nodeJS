@@ -1,5 +1,7 @@
 const { db } = require('../database');
-const { generateAccessToken } = require('../Utils/TokenGenerator');
+const jwt = require('jsonwebtoken');
+const { generateAccessToken, checkTokenMiddleware, extractBearerToken } = require('../Utils/TokenGenerator');
+
 class User {
 
     /**
@@ -7,7 +9,26 @@ class User {
      * Se connecter
      */
     static login(req, res) {
-        res.send('Se connecter');
+        if(!req.body.email || !req.body.password) return res.status(400).send('Email ou mot de passe manquant');
+
+        const sql = `SELECT * FROM users WHERE email = '${req.body.email}' AND password = '${req.body.password}'`;
+
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            
+            const token = generateAccessToken({
+                id: result[0].id,
+                email: result[0].email,
+                password: result[0].password,
+                roles: result[0].roles,
+                firstname: result[0].firstname,
+                lastname: result[0].lastname
+            });
+
+            return res.json({ access_token: token });
+        })
     }
 
     /**
@@ -55,6 +76,7 @@ class User {
                 res.send(error);
             }
             res.send(result);
+            return result;
         })
     }
 
@@ -63,7 +85,10 @@ class User {
      * Récupérer ses informations
      */
     static getMe(req, res) {
-        res.send('Récupérer ses informations persos');
+        const token = req.headers.authorization && extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token);
+
+        return res.json({ content: decoded });
     }
 
     /**
@@ -71,7 +96,31 @@ class User {
      * Modifier ses informations
      */
     static putMe(req, res) {
-        res.send('Modifier ses informations persos');
+        const token = req.headers.authorization && extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token);
+
+        let { email, roles, password, firstname, lastname } = req.body;
+        if(!req.body.email || !req.body.roles || !req.body.password || !req.body.firstname || !req.body.lastname) {
+            return res.status(400).send('Champs manquants');
+        }
+
+        const sql = `UPDATE users SET email = '${email}', roles = '${roles}', password = '${password}', firstname = '${firstname}', lastname = '${lastname}' WHERE id = '${decoded.id}'`;
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+
+            const token = generateAccessToken({
+                id: decoded.id,
+                email: email,
+                password: password,
+                roles: roles,
+                firstname: firstname,
+                lastname: lastname
+            });
+
+            return res.json({ access_token: token });
+        })
     }
 
     /**

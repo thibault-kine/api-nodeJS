@@ -1,5 +1,7 @@
 const { db } = require('../database');
-const { generateAccessToken } = require('../Utils/TokenGenerator');
+const jwt = require('jsonwebtoken');
+const { generateAccessToken, checkTokenMiddleware, extractBearerToken } = require('../Utils/TokenGenerator');
+
 class User {
 
     /**
@@ -7,7 +9,22 @@ class User {
      * Se connecter
      */
     static login(req, res) {
-        res.send('Se connecter');
+        if(!req.body.email || !req.body.password) return res.status(400).send('Email ou mot de passe manquant');
+        let user = {};
+
+        const sql = 'SELECT * FROM users';
+        db.query(sql, (error, result) => {
+            if(error) {
+                res.send(error);
+            }
+            user = result;
+        })
+
+        if(!user) return res.status(400).send('Utilisateur introuvable');
+
+        const token = generateAccessToken({ id: user.id, roles: user.roles });
+
+        return res.json({ access_token: token });
     }
 
     /**
@@ -55,6 +72,7 @@ class User {
                 res.send(error);
             }
             res.send(result);
+            return result;
         })
     }
 
@@ -63,7 +81,10 @@ class User {
      * Récupérer ses informations
      */
     static getMe(req, res) {
-        res.send('Récupérer ses informations persos');
+        const token = req.headers.authorization && extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, { complete: false });
+
+        return res.json({ content: decoded });
     }
 
     /**

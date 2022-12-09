@@ -20,7 +20,7 @@ router.get('/', user.getAll)
 
 // PUBLIC
 // Récupérer un seul user
-router.get('/:id', user.get)
+router.get('/id/:id', user.get)
 
 // AUTH
 // Récupérer ses informations
@@ -32,11 +32,11 @@ router.put('/me', user.putMe)
 
 // ADMIN
 // Supprimer un user précis
-router.delete('/:id', user.delete)
+router.delete('/id/:id', user.delete)
 
 // ADMIN
 // Modifier un user précis
-router.put('/:id', user.put)
+router.put('/id/:id', user.put)
 
 
 module.exports = router;
